@@ -1,11 +1,12 @@
 var hours = process.argv[2];
 var minutes = process.argv[3];
 
+hours = parseInt(hours, 10);
+minutes = parseInt(minutes, 10);
+
 
 // проверка корректности введенных данных
 function correctTime(hours, minutes) {
-    hours = parseInt(hours);
-    minutes = parseInt(minutes);
     if (isNaN(hours) || isNaN(minutes) || 
         (hours < 0) || (hours > 23) || (minutes < 0) || (minutes > 59)) {
         return false;
