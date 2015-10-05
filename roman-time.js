@@ -1,10 +1,21 @@
 var hours = process.argv[2];
 var minutes = process.argv[3];
 
-if ((hours === undefined) || (minutes === undefined) ||
-    (hours < 0) || (hours > 23) || (minutes < 0) || (minutes > 59)) {
-	console.log('Время указано не верно');
-    return;
+
+// проверка корректности введенных данных
+function correctTime(hours, minutes) {
+    hours = parseInt(hours);
+    minutes = parseInt(minutes);
+    if (isNaN(hours) || isNaN(minutes) || 
+        (hours < 0) || (hours > 23) || (minutes < 0) || (minutes > 59)) {
+        return false;
+    }
+    return true;
+}
+
+if (!correctTime(hours, minutes)) {
+    console.log('Время указано не верно');
+    process.exit(1);
 }
 
 var arab = [1, 4, 5, 9, 10, 40, 50];
@@ -76,8 +87,8 @@ var H = 5; // высота символов
 // перевод в строковое представление для вывода
 function getAscii(romanTime, H) {
     var res = '';
-    for (var i=0; i<H; i++) {
-        for (var j=0; j<romanTime.length; j+=H) {
+    for (var i = 0; i < H; i++) {
+        for (var j = 0; j < romanTime.length; j += H) {
             res += romanTime[j+i];
         }
         res += '\n';
@@ -91,18 +102,18 @@ function toRoman(number) {
     if (number == 0) {
         return extChar[1];
     }
-	var res = [];
-	var ind = arab.length-1;
-	while (number > 0) {
-		if (number >= arab[ind]) {
-			res = res.concat(roman[ind]);
-			number -= arab[ind];
-		}
-		else {
+    var res = [];
+    var ind = arab.length - 1;
+    while (number > 0) {
+        if (number >= arab[ind]) {
+            res = res.concat(roman[ind]);
+            number -= arab[ind];
+        }
+        else {
             ind--;
         }
-	}
-	return res;
+    }
+    return res;
 }
 
 var romanTime = toRoman(hours);
